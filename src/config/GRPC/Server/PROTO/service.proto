@@ -1,0 +1,67 @@
+syntax = "proto3";
+package MessangerPackage;
+
+service Messanger {
+    rpc message_user (sendMessage) returns (responseStatus);
+    rpc get_latest_messages (getLatestMesssage) returns (mmessages);
+    rpc get_latest_chats (getChats) returns (getChatsResp);
+} 
+
+message getChats {
+    credential credential = 1;
+}
+
+message getChatsResp {
+    repeated chat chats = 1;
+}
+
+message chat {
+    string id = 1;
+    repeated string users = 2;
+    string type = 3;
+    int64 last_modified = 4;
+}
+
+message getLatestMesssage {
+    repeated string users = 1;
+    string id = 2;
+    credential credential = 3;
+}
+
+message sendMessage {
+    string user = 1;
+    mmessage message = 2;
+    credential credential = 3;
+}
+
+message mmessages {
+    repeated mmessage messages = 1;
+}
+
+message mmessage {
+    string id = 1;
+    string chat = 2;
+    string user = 3;
+    string text = 4;
+}
+
+message responseStatus {
+    string status = 1;
+}
+
+message scope {
+    bool read = 1;
+    bool write = 2;
+    third_party_scope third_party = 3;
+}
+
+message third_party_scope {
+    bool read = 1;
+    bool write = 2;
+}
+
+message credential {
+    string user = 1;
+    int32 level = 2;
+    scope scope = 3;
+}
