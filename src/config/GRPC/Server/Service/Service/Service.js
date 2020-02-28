@@ -6,7 +6,7 @@ class Service {
         this.options = require("./protoLoaderSettings")
 
         let packageDefinition = this.protoLoader.loadSync(this.protoPath, this.options)
-        this.service = this.grpc.loadPackageDefinition(packageDefinition).MessangerPackage.Messanger.service
+        this.service = this.grpc.loadPackageDefinition(packageDefinition).NotifierPackage.Notifier.service
     }
 }
 

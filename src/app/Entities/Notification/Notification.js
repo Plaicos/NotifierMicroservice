@@ -8,28 +8,31 @@ module.exports = class Notification {
 
     build() {
         return new Promise(async (resolve, reject) => {
-            let { data, DAO, SCI, entities } = this
+            let { _data, DAO, SCI, entities } = this
 
-            if (!data || typeof data !== "object") {
-                return reject("Notification data must be a valid object")
+            if (!_data || typeof _data !== "object") {
+                return reject("Notification data must be a valid string base64")
             }
 
-            let { notifier, target, type, _data } = data
+            let { notifier, target, type, data } = _data
             let Notification = new Object()
 
             try {
                 Notification.type = await entities.type({ type, DAO })
-                Notification.notifier = 
-                Notification.target =
+                Notification.notifier = await entities.notifier({ notifier, SCI })
+                Notification.target = await entities.target({ target, SCI })
                 Notification.created_at = Date.now()
                 Notification.last_attempted = 0
                 Notification.attempts = 0
+
+                resolve(Notification)
             }
             catch (erro) {
                 reject(erro)
             }
         })
     }
+
 }
 
 let _notification = {

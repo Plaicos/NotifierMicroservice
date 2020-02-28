@@ -1,15 +1,21 @@
-function initialize(dependencies) {
+async function initialize(dependencies) {
     let serverBuilder = require("./Server/ServerBuilder").build
     let serviceFactory = new (require("./Server/Service/ServiceFactory"))
     let apiBuilder = require("./Server/API/API")
 
-    let service = serviceFactory.makeService()
-    let api = new apiBuilder(dependencies).build()
-    let server = serverBuilder(service, api)
+    try {
+        let service = serviceFactory.makeService()
+        let api = await new apiBuilder(dependencies).build()
+        let server = serverBuilder(service, api)
 
-    server.start()
-    console.log("GRPC MESSANGER SERVER RUNNING")
-    return
+        server.start()
+        console.log("GRPC NOTIFIER SERVER RUNNING")
+        return
+    }
+    catch (erro) {
+        console.log("Error trying to initialize GRPC server, aborting...", erro)
+        process.abort()
+    }
 }
 
 function exportClient() {

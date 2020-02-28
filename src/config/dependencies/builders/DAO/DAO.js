@@ -8,24 +8,20 @@ module.exports = class DAO {
         }
     }
 
-    async check_notification_type(type) {
-        try {
-            let exists = await this.collections.notification_types.find({ type: type }).toArray((erro, result) => {
+    check_notification_type(type) {
+        return new Promise(async (resolve, reject) => {
+            this.collections.notification_types.find({ type: type }).toArray((erro, result) => {
                 if (erro) {
-                    throw erro
+                    return reject(erro) 
                 }
                 if (result.length === 0) {
-                    return false;
+                    resolve(false);
                 }
                 else {
-                    return true
+                    resolve(true)
                 }
             })
-            return exists;
-        }
-        catch{
-            reject(erro)
-        }
+        })
     }
 
 }

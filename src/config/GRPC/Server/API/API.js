@@ -9,14 +9,13 @@ module.exports = class API {
         this.Controller = require("../../../../../src/app/Controller/Controller.js")
     }
 
-    build() {
+    async build() {
         let { dependencies, Controller } = this
         Controller = new Controller(dependencies)
+        await Controller.initialize()
 
         let api = {
-           message_user: Controller.message_user(),
-           get_latest_messages: Controller.get_latest_messages(),
-           get_latest_chats: Controller.get_latest_chats()
+           queue: Controller.queue()
         }
         return Object.freeze(api)
     }
