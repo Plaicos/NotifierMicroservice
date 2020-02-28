@@ -1,6 +1,6 @@
 module.exports = {
     type: require("./notification_type"),
-    notifier: require(""),
-    target: require(""),
-    data: require("")
+    notifier: require("./notification_notifier"),
+    target: require("./notification_target"),
+    //data: require("")
 }

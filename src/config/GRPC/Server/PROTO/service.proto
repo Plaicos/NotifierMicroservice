@@ -1,48 +1,19 @@
 syntax = "proto3";
-package MessangerPackage;
+package NotifierPackage;
 
-service Messanger {
-    rpc message_user (sendMessage) returns (responseStatus);
-    rpc get_latest_messages (getLatestMesssage) returns (mmessages);
-    rpc get_latest_chats (getChats) returns (getChatsResp);
+service Notifier {
+    rpc queue (queueRequest) returns (responseStatus);
 } 
 
-message getChats {
-    credential credential = 1;
+message queueRequest {
+    notification notification_data = 1;
 }
 
-message getChatsResp {
-    repeated chat chats = 1;
-}
-
-message chat {
-    string id = 1;
-    repeated string users = 2;
-    string type = 3;
-    int64 last_modified = 4;
-}
-
-message getLatestMesssage {
-    repeated string users = 1;
-    string id = 2;
-    credential credential = 3;
-}
-
-message sendMessage {
-    string user = 1;
-    mmessage message = 2;
-    credential credential = 3;
-}
-
-message mmessages {
-    repeated mmessage messages = 1;
-}
-
-message mmessage {
-    string id = 1;
-    string chat = 2;
-    string user = 3;
-    string text = 4;
+message notification {
+    string type = 1;
+    string notifier = 2;
+    string target = 3;
+    string data = 4;
 }
 
 message responseStatus {

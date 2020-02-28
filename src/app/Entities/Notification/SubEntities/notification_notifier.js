@@ -1,16 +1,16 @@
-module.exports = async ({ type, DAO }) => {
-    if (!type || typeof type !== "string") {
-        throw ("Notification type must be a valid string")
+module.exports = async ({ notifier, SCI }) => {
+    if (!notifier || typeof notifier !== "string") {
+        throw ("Notification notifier must be a valid string")
     }
 
     let exist = false
 
     try {
-        exist = await DAO.check_notification_type(type)
+        exist = await SCI.User.check_user(notifier)
         if (!exist) {
-            throw (`Notification type '${type}' does not exist`)
+            throw (`Notifier user '${notifier}' does not exist`)
         }
-        return type;
+        return notifier;
     }
     catch (erro) {
         throw (erro)
